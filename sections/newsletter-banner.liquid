@@ -1,6 +1,6 @@
 {{ 'component-newsletter-banner.css' | asset_url | stylesheet_tag }}
 
-<div class="newsletter-banner section-{{ section.id }}-padding page-width page-width-desktop">
+<div class="newsletter-banner section-{{ section.id }}-padding page-width">
   <div class="newsletter-banner__wrapper page-width">
     {%- if section.settings.image != blank -%}
       <div class="newsletter-banner__media">
@@ -12,7 +12,7 @@
       </div>
     {%- endif -%}
 
-    <div class="newsletter-banner__content color-{{ section.settings.color_scheme }} gradient">
+    <div class="newsletter-banner__content color-{{ section.settings.color_scheme }}">
       <div class="newsletter-banner__box">
         <h2 class="newsletter-banner__heading h1">{{ section.settings.heading | escape }}</h2>
         <div class="newsletter-banner__text rte">{{ section.settings.text }}</div>
