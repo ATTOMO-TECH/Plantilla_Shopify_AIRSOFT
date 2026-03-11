@@ -1,7 +1,7 @@
 {{ 'component-newsletter-banner.css' | asset_url | stylesheet_tag }}
 
 <div class="newsletter-banner section-{{ section.id }}-padding page-width">
-  <div class="newsletter-banner__wrapper page-width">
+  <div class="newsletter-banner__wrapper">
     {%- if section.settings.image != blank -%}
       <div class="newsletter-banner__media">
         {{
