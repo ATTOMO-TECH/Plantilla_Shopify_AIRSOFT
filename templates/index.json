@@ -393,7 +393,11 @@
       ],
       "name": "Timeline History",
       "settings": {
-        "title": "Conoce nuestra historia"
+        "color_scheme": "scheme-2",
+        "title": "Conoce nuestra historia",
+        "vertical_padding": 10,
+        "horizontal_padding": 30,
+        "border_radius": 30
       }
     }
   },
