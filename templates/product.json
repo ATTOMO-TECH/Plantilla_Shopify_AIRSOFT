@@ -70,7 +70,7 @@
           "settings": {
             "heading": "Shipping & Returns",
             "icon": "truck",
-            "content": "",
+            "content": "<p>Entrega en entre 2 a 3 días. <br/><br/>No se admiten devoluciones pasados los 15 días.</p>",
             "page": ""
           }
         },
@@ -79,7 +79,7 @@
           "settings": {
             "heading": "Dimensions",
             "icon": "ruler",
-            "content": "",
+            "content": "<p>120cm x 30cm x 60cm</p>",
             "page": ""
           }
         },
@@ -88,7 +88,7 @@
           "settings": {
             "heading": "Care Instructions",
             "icon": "heart",
-            "content": "",
+            "content": "<p>Engrasar bien con aceite de silicona y limpiar el cañon tras cada partida</p>",
             "page": ""
           }
         }
