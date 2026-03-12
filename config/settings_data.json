@@ -137,18 +137,6 @@
       }
     },
     "content_for_index": [],
-    "blocks": {
-      "9278379683843197553": {
-        "type": "shopify://apps/appointment-booking-appointo/blocks/app-embed/8e9086b8-9c22-4cd3-b1d1-0967727a5d97",
-        "disabled": false,
-        "settings": {}
-      },
-      "1850493961649900144": {
-        "type": "shopify://apps/apntly-appointment-booking-app/blocks/main-app-embed/17a520a2-4844-483a-826a-11cb5dd0370d",
-        "disabled": false,
-        "settings": {}
-      }
-    },
     "color_schemes": {
       "scheme-1": {
         "settings": {
@@ -166,9 +154,9 @@
           "background": "#292929",
           "background_gradient": "",
           "text": "#ffffff",
-          "button": "#121212",
-          "button_label": "#f3f3f3",
-          "secondary_button_label": "#121212",
+          "button": "#63d66c",
+          "button_label": "#121212",
+          "secondary_button_label": "#63d66c",
           "shadow": "#121212"
         }
       },
