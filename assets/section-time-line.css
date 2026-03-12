@@ -39,17 +39,17 @@
   }
 
   /* Restaurado: El puntito conector */
-  .timeline-dot:not(:last-child)::after {
-    content: "";
-    width: 6px;
-    height: 6px;
-    background: #2a2a2a;
-    border-radius: 50%;
-    position: absolute;
-    right: -15px;
-    top: 50%;
-    transform: translateY(-50%);
-  }
+.timeline-dot:not(:last-child)::after{
+  content:"";
+  width:6px;
+  height:6px;
+  background:#6b6b6b;
+  border-radius:50%;
+  position:absolute;
+  right:-15px;
+  top:50%;
+  transform:translateY(-50%);
+}
 
   /* Animación del contenido */
   .timeline-content {
