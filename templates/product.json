@@ -150,10 +150,21 @@
         "padding_top": 36,
         "padding_bottom": 28
       }
+    },
+    "newsletter_banner_HtDEGF": {
+      "type": "newsletter-banner",
+      "name": "Newsletter Banner",
+      "settings": {
+        "image": "shopify://shop_images/Blog_secundario_2.png",
+        "heading": "Únete al equipo",
+        "text": "<p>Suscríbete a nuestro newsletter y sé el primero en conocer nuevos productos, lanzamientos y promociones exclusivas.</p>",
+        "color_scheme": ""
+      }
     }
   },
   "order": [
     "main",
-    "related-products"
+    "related-products",
+    "newsletter_banner_HtDEGF"
   ]
 }
