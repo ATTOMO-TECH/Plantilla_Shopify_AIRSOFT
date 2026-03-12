@@ -42,80 +42,89 @@
 </section>
 
 <style>
-  .timeline-history{
-    background:#111;
-    padding:80px 20px;
-    border-radius:24px;
-    color:white;
-  }
+    .timeline-history{
+      background:#111;
+      padding:80px 20px;
+      border-radius:24px;
+      color:white;
+    }
 
-  .timeline-title{
-    text-align:center;
-    font-size:32px;
-    margin: 0px 0px 20px 0px;
-  }
+    .timeline-title{
+      text-align:center;
+      font-size:32px;
+      margin: 0px 0px 20px 0px;
+    }
 
-  .timeline-nav{
-    display:flex;
-    justify-content:center;
-    gap:24px;
-    margin-bottom:50px;
-    flex-wrap:wrap;
-  }
+    .timeline-nav{
+      display:flex;
+      justify-content:center;
+      gap:24px;
+      margin-bottom:50px;
+      flex-wrap:wrap;
+    }
 
-  .timeline-dot{
-    background:#2a2a2a;
-    color:#aaa;
-    border:none;
-    padding:10px 18px;
+    .timeline-dot{
+      background:#2a2a2a;
+      color:#aaa;
+      border:none;
+      padding:10px 18px;
+      border-radius:20px;
+      cursor:pointer;
+      transition:all .25s;
+    }
+
+    .timeline-dot.active{
+      background:#63d471;
+      color:#000;
+    }
+
+    .timeline-content{
+      display:none;
+    }
+
+    .timeline-content.active{
+      display:block;
+    }
+
+    .timeline-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:60px;
+      align-items:center;
+    }
+
+    .timeline-image{
+        width:100%;
+    aspect-ratio:16/10;
+    overflow:hidden;
     border-radius:20px;
-    cursor:pointer;
-    transition:all .25s;
-  }
-
-  .timeline-dot.active{
-    background:#63d471;
-    color:#000;
-  }
-
-  .timeline-content{
-    display:none;
-  }
-
-  .timeline-content.active{
-    display:block;
-  }
-
-  .timeline-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:60px;
-    align-items:center;
   }
 
   .timeline-image img{
     width:100%;
-    border-radius:20px;
+    height:100%;
+    object-fit:cover;
+    display:block;
   }
 
-  .timeline-text h3{
-    font-size:28px;
-    margin-bottom:16px;
-  }
+    .timeline-text h3{
+      font-size:28px;
+      margin-bottom:16px;
+    }
 
-  .timeline-text p{
-    color:#cfcfcf;
-    line-height:1.6;
-  }
+    .timeline-text p{
+      color:#cfcfcf;
+      line-height:1.6;
+    }
 
-  @media(max-width:900px){
+    @media(max-width:900px){
 
-  .timeline-grid{
-    grid-template-columns:1fr;
-    gap:30px;
-  }
+    .timeline-grid{
+      grid-template-columns:1fr;
+      gap:30px;
+    }
 
-  }
+    }
 </style>
 
 <script>
