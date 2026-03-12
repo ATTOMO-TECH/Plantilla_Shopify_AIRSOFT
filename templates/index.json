@@ -395,7 +395,7 @@
       "settings": {
         "color_scheme": "scheme-2",
         "title": "Conoce nuestra historia",
-        "vertical_padding": 10,
+        "vertical_padding": 30,
         "horizontal_padding": 30,
         "border_radius": 30
       }
