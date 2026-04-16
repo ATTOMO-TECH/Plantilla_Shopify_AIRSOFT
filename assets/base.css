@@ -80,7 +80,7 @@
 .page-width {
   max-width: var(--page-width);
   margin: 0 auto;
-  padding: 0 1rem;
+  padding: 0 2rem;
 }
 
 body:has(.section-header .drawer-menu) .announcement-bar-section .page-width {
@@ -545,7 +545,7 @@ hr {
 
 .full-unstyled-link {
   text-decoration: none;
-  color: currentColor;
+  color: inherit;
   display: block;
 }
 
@@ -713,11 +713,7 @@ summary::-webkit-details-marker {
   box-shadow: none;
 }
 
-*:focus-visible {
-  outline: var(--focused-base-outline);
-  outline-offset: var(--focused-base-outline-offset);
-  box-shadow: var(--focused-base-box-shadow);
-}
+
 
 /* Fallback - for browsers that don't support :focus-visible, a fallback is set for :focus */
 .focused {
@@ -1620,10 +1616,12 @@ details[open] > .share-button__fallback {
   left: var(--inputs-border-width);
   border: 0.1rem solid transparent;
   border-radius: var(--inputs-radius);
-  box-shadow: 0 0 0 var(--inputs-border-width) rgba(var(--color-foreground), var(--inputs-border-opacity));
+  box-shadow: 0 var(--inputs-border-width) 0 0  rgba(var(--color-foreground), var(--inputs-border-opacity));
   transition: box-shadow var(--duration-short) ease;
   z-index: 1;
 }
+
+
 
 .select__select {
   font-family: var(--font-body-family);
@@ -1639,7 +1637,7 @@ details[open] > .share-button__fallback {
 .customer .field:hover.field:after,
 .customer select:hover.select:after,
 .localization-form__select:hover.localization-form__select:after {
-  box-shadow: 0 0 0 calc(0.1rem + var(--inputs-border-width))
+  box-shadow: 0 calc(0.1rem + var(--inputs-border-width)) 0 0 
     rgba(var(--color-foreground), var(--inputs-border-opacity));
   outline: 0;
   border-radius: var(--inputs-radius);
@@ -1650,7 +1648,7 @@ details[open] > .share-button__fallback {
 .customer .field input:focus-visible,
 .customer select:focus-visible,
 .localization-form__select:focus-visible.localization-form__select:after {
-  box-shadow: 0 0 0 calc(0.1rem + var(--inputs-border-width)) rgba(var(--color-foreground));
+  box-shadow: 0 calc(0.1rem + var(--inputs-border-width)) 0 0 rgba(var(--color-foreground));
   outline: 0;
   border-radius: var(--inputs-radius);
 }
@@ -1660,7 +1658,7 @@ details[open] > .share-button__fallback {
 .customer .field input:focus,
 .customer select:focus,
 .localization-form__select:focus.localization-form__select:after {
-  box-shadow: 0 0 0 calc(0.1rem + var(--inputs-border-width)) rgba(var(--color-foreground));
+  box-shadow: 0 calc(0.1rem + var(--inputs-border-width)) 0 0 rgba(var(--color-foreground));
   outline: 0;
   border-radius: var(--inputs-radius);
 }
@@ -1727,7 +1725,7 @@ details[open] > .share-button__fallback {
 .field__label,
 .customer .field label {
   font-size: 1.6rem;
-  left: calc(var(--inputs-border-width) + 2rem);
+  /* left: calc(var(--inputs-border-width) + 2rem); */
   top: calc(1rem + var(--inputs-border-width));
   margin-bottom: 0;
   pointer-events: none;
@@ -1746,7 +1744,7 @@ details[open] > .share-button__fallback {
 .customer .field input:-webkit-autofill ~ label {
   font-size: 1rem;
   top: calc(var(--inputs-border-width) + 0.5rem);
-  left: calc(var(--inputs-border-width) + 2rem);
+  /* left: calc(var(--inputs-border-width) + 2rem); */
   letter-spacing: 0.04rem;
 }
 
@@ -1756,7 +1754,7 @@ details[open] > .share-button__fallback {
 .customer .field input:focus,
 .customer .field input:not(:placeholder-shown),
 .customer .field input:-webkit-autofill {
-  padding: 2.2rem 1.5rem 0.8rem 2rem;
+  padding: 2.2rem 1.5rem 0.8rem 0rem;
   margin: var(--inputs-border-width);
 }
 
@@ -2387,7 +2385,12 @@ input[type='checkbox'] {
 
   .header--middle-left {
     grid-template-areas: 'heading navigation icons';
-    grid-template-columns: auto auto 1fr;
+    column-gap: 2rem;
+  }
+
+  .header--default {
+    grid-template-areas: 'heading navigation icons';
+     grid-template-columns: auto auto 1fr;;
     column-gap: 2rem;
   }
 

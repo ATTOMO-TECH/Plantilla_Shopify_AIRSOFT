@@ -1,5 +1,17 @@
 {{ 'section-image-banner.css' | asset_url | stylesheet_tag }}
+<style>
+  .banner__box{
+    max-width: {{ section.settings.max-width }}px;
+    background-color: rgba({{ section.settings.rgba }});
+    border-radius: {{ section.settings.border }}px;
+  }
 
+  @media (max-width: 767px){
+    .banner__box{
+      max-width: {{ section.settings.max-width-mobile }}px;
+    }
+  }
+</style>
 {%- if section.settings.image_height == 'adapt' and section.settings.image != blank -%}
   {%- style -%}
     @media screen and (max-width: 749px) {
@@ -19,6 +31,7 @@
         content: '';
         display: block;
       }
+
     }
   {%- endstyle -%}
 {%- endif -%}
@@ -126,7 +139,9 @@
     {%- endif -%}
 
     <div class="banner__content banner__content--{{ section.settings.desktop_content_position }} page-width{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-      <div class="banner__box content-container content-container--full-width-mobile color-{{ section.settings.color_scheme }} gradient">
+      <div
+        class="banner__box content-container content-container--full-width-mobile color-{{ section.settings.color_scheme }} gradient"
+      >
         {%- for block in section.blocks -%}
           {%- case block.type -%}
             {%- when 'heading' -%}
@@ -305,6 +320,24 @@
       "label": "t:sections.image-banner.settings.desktop_content_position.label"
     },
     {
+      "type": "number",
+      "id": "max-width",
+      "default": 300,
+      "label": "Max width (px)"
+    },
+    {
+      "type": "number",
+      "id": "border",
+      "default": 30,
+      "label": "Border radius (px)"
+    },
+    {
+      "type": "text",
+      "id": "rgba",
+      "default": "0,0,0,0.6",
+      "label": "Color RGBA"
+    },
+    {
       "type": "select",
       "id": "desktop_content_alignment",
       "options": [
@@ -350,6 +383,12 @@
       "id": "show_text_below",
       "default": true,
       "label": "t:sections.image-banner.settings.show_text_below.label"
+    },
+    {
+      "type": "number",
+      "id": "max-width-mobile",
+      "default": 300,
+      "label": "Max width (px)"
     }
   ],
   "blocks": [

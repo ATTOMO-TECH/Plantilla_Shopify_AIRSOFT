@@ -1,0 +1,94 @@
+/* Contenedor principal: se adapta al ancho del grid (li.grid__item) */
+.custom-card-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+  transition: transform 0.3s ease;
+}
+
+/* Contenedor de imagen 1:1 automático */
+.custom-card-inner {
+  width: 100%;
+  aspect-ratio: 1 / 1; /* Esto garantiza el cuadrado sin importar el ancho */
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.custom-card-media {
+  width: 100%;
+  height: 100%;
+}
+
+/* La clase .media de Dawn suele dar problemas, la neutralizamos aquí */
+.custom-card-media .media {
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.custom-card-media img {
+  width: 100%;
+  height: 100%;
+  padding: 15px; 
+  border-radius: 30px; 
+  object-fit: cover;
+}
+
+/* Área de contenido */
+.custom-card-content {
+  padding: 15px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+.custom-card-info-group {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+.custom-card-heading {
+  margin: 0 0 10px 0;
+  height: 2.4em; 
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.custom-card-meta {
+  min-height: 30px; 
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin-bottom: 0px;
+}
+.custom-card-heading a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Badges sobre la imagen */
+.custom-card-badge-container {
+  position: absolute;
+  top: 15px;
+  left: 20px;
+  z-index: 3;
+}
+
+/* Botón Quick Add al fondo */
+.custom-card-quick-add {
+  margin-top: auto; 
+  width: 100%;
+}
+
+.custom-card-quick-add button {
+  padding: 10px;
+}

@@ -13,11 +13,6 @@
   text-align: var(--text-alignment);
 }
 
-.card:not(.ratio) {
-  display: flex;
-  flex-direction: column;
-}
-
 .card.card--horizontal {
   --text-alignment: left;
   --image-padding: 0rem;
@@ -138,12 +133,8 @@
 .card__information {
   grid-row-start: 2;
   padding: 1.3rem 1.5rem;
-
 }
 
-.card:not(.ratio) > .card__content {
-  grid-template-rows: max-content minmax(0, 1fr) max-content auto;
-}
 
 .card-information .card__information-volume-pricing-note {
   margin-top: 0.6rem;

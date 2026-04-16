@@ -1,31 +1,51 @@
 {{ 'component-slider.css' | asset_url | stylesheet_tag }}
 {{ 'benefits-slider.css' | asset_url | stylesheet_tag }}
 
-<div
-  class="page-width page-width-desktop"
-  style="padding-top:{{ section.settings.padding_top }}px; padding-bottom:{{ section.settings.padding_bottom }}px;"
->
-  <div class="slider-mobile-gutter">
-    <ul class="benefits-slider " role="list">
-      {%- for block in section.blocks -%}
-        <li class="benefits-item" {{ block.shopify_attributes }}>
-          <div class="benefits-card">
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="color-{{ section.settings.color_scheme }} gradient">
+  <div class="page-width section-{{ section.id }}-padding">
+    <div class="slider-mobile-gutter">
+      <ul class="benefits-slider" role="list">
+        {%- for block in section.blocks -%}
+          <li class="benefits-item" {{ block.shopify_attributes }}>
             <div
-              class="benefits-card__icon"
-              style="background-color: {{ block.settings.background_color }};"
+              class="benefits-card"
+              style="background-color: {{ block.settings.background_color_card }};"
             >
-              {%- if block.settings.icon != 'none' -%}
-                {%- render 'icon', icon: block.settings.icon -%}
-              {%- endif -%}
+              <div
+                class="benefits-card__icon"
+                style="background-color: {{ block.settings.background_color_icon }}; color: {{ block.settings.icon_color }};"
+              >
+                {%- if block.settings.icon != 'none' -%}
+                  {%- render 'icon', icon: block.settings.icon -%}
+                {%- endif -%}
+              </div>
+              <div class="benefits-card__content">
+                <p class="benefits-card__title" style="color: {{ block.settings.icon_color }};">
+                  {{ block.settings.title }}
+                </p>
+                <p class="benefits-card__text" style="color: {{ block.settings.icon_color }};">
+                  {{ block.settings.text }}
+                </p>
+              </div>
             </div>
-            <div class="benefits-card__content">
-              <p>{{ block.settings.title }}</p>
-              <p>{{ block.settings.text }}</p>
-            </div>
-          </div>
-        </li>
-      {%- endfor -%}
-    </ul>
+          </li>
+        {%- endfor -%}
+      </ul>
+    </div>
   </div>
 </div>
 
@@ -73,15 +93,25 @@
       "name": "Beneficio",
       "settings": [
         {
+          "type": "header",
+          "content": "Estilo de Tarjeta"
+        },
+        {
           "type": "color",
-          "id": "background_color",
-          "label": "Color de fondo",
+          "id": "background_color_card",
+          "label": "Fondo de la tarjeta",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "background_color_icon",
+          "label": "Fondo del círculo del icono",
           "default": "#7ED957"
         },
         {
           "type": "color",
           "id": "icon_color",
-          "label": "Color del icono",
+          "label": "Color del icono (SVG)",
           "default": "#000000"
         },
         {
@@ -89,13 +119,13 @@
           "id": "icon",
           "options": [
             { "value": "none", "label": "Ninguno" },
-            { "value": "star-empty", "label": "Estrella" },
-            { "value": "settings", "label": "Ajustes" },
-            { "value": "shipping", "label": "Camión" },
-            { "value": "secure", "label": "Seguro" }
+            { "value": "star", "label": "Estrella" },
+            { "value": "truck", "label": "Camión" },
+            { "value": "lock", "label": "Candado" },
+            { "value": "return", "label": "Devolución" }
           ],
-          "default": "none",
-          "label": "Icon"
+          "default": "truck",
+          "label": "Icono"
         },
         {
           "type": "inline_richtext",

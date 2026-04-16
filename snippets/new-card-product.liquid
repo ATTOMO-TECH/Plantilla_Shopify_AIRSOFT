@@ -1,0 +1,166 @@
+{% comment %}
+  Renders a product card
+
+  Accepts:
+  - card_product: {Object} Product Liquid object (optional)
+  - media_aspect_ratio: {String} Size of the product image card. Values are "square" and "portrait". Default is "square" (optional)
+  - image_shape: {String} Image mask to apply to the product image card. Values are "arch", "blob", "chevronleft", "chevronright", "diamond", "parallelogram", and "round". (optional)
+  - show_secondary_image: {Boolean} Show the secondary image on hover. Default: false (optional)
+  - show_vendor: {Boolean} Show the product vendor. Default: false
+  - show_rating: {Boolean} Show the product rating. Default: false
+  - extend_height: {Boolean} Card height extends to available container space. Default: true (optional)
+  - lazy_load: {Boolean} Image should be lazy loaded. Default: true (optional)
+  - skip_styles: {Boolean} Don't include component styles. Useful when rendering multiple product cards in a loop. Default: false (optional)
+  - quick_add: {Boolean} Show the quick add button.
+  - section_id: {String} The ID of the section that contains this card.
+  - horizontal_class: {Boolean} Add a card--horizontal class if set to true. Default: false (optional)
+  - horizontal_quick_add: {Boolean} Changes the quick add button styles when set to true. Default: false (optional)
+  - placeholder_image: {String} The placeholder image to use when no product exists. Default: 'product-apparel-2' (optional)
+
+  Usage:
+  {% render 'card-product', show_vendor: section.settings.show_vendor %}
+{% endcomment %}
+{%- unless skip_styles -%}
+  {{ 'component-rating.css' | asset_url | stylesheet_tag }}
+  {{ 'component-volume-pricing.css' | asset_url | stylesheet_tag }}
+  {{ 'product-card.css' | asset_url | stylesheet_tag }}
+  {{ 'component-price.css' | asset_url | stylesheet_tag }}
+  {{ 'quick-order-list.css' | asset_url | stylesheet_tag }}
+  {{ 'quantity-popover.css' | asset_url | stylesheet_tag }}
+{%- endunless -%}
+
+{%- if card_product and card_product != empty -%}
+  <div class="custom-card-wrapper underline-links-hover" style="background-color:{{ settings.product_bg_color }}">
+    <div class="custom-card-main">
+      {%- comment -%} BLOQUE IMAGEN 1:1 {%- endcomment -%}
+      <div class="custom-card-inner">
+        {%- if card_product.featured_media -%}
+          <div class="custom-card-media">
+            <div class="media media--transparent media--hover-effect">
+              <img
+                srcset="{%- if card_product.featured_media.width >= 165 -%}{{ card_product.featured_media | image_url: width: 165 }} 165w,{%- endif -%}{%- if card_product.featured_media.width >= 360 -%}{{ card_product.featured_media | image_url: width: 360 }} 360w,{%- endif -%}{{ card_product.featured_media | image_url }} {{ card_product.featured_media.width }}w"
+                src="{{ card_product.featured_media | image_url: width: 533 }}"
+                alt="{{ card_product.featured_media.alt | escape }}"
+                class="motion-reduce"
+                {% unless lazy_load == false %}
+                  loading="lazy"
+                {% endunless %}
+                width="{{ card_product.featured_media.width }}"
+                height="{{ card_product.featured_media.height }}"
+              >
+              {%- if card_product.media[1] != null and show_secondary_image -%}
+                <img
+                  srcset="{%- if card_product.media[1].width >= 165 -%}{{ card_product.media[1] | image_url: width: 165 }} 165w,{%- endif -%}{{ card_product.media[1] | image_url }} {{ card_product.media[1].width }}w"
+                  src="{{ card_product.media[1] | image_url: width: 533 }}"
+                  alt="{{ card_product.media[1].alt | escape }}"
+                  class="motion-reduce"
+                  loading="lazy"
+                  width="{{ card_product.media[1].width }}"
+                  height="{{ card_product.media[1].height }}"
+                >
+              {%- endif -%}
+            </div>
+          </div>
+        {%- endif -%}
+
+        <div class="custom-card-badge-container {{ settings.badge_position }}">
+          {%- if card_product.available == false -%}
+            <span class="badge color-{{ settings.sold_out_badge_color_scheme }}">
+              {{- 'products.product.sold_out' | t -}}
+            </span>
+          {%- elsif card_product.compare_at_price > card_product.price and card_product.available -%}
+            <span class="badge color-{{ settings.sale_badge_color_scheme }}">
+              {{- 'products.product.on_sale' | t -}}
+            </span>
+          {%- endif -%}
+        </div>
+      </div>
+
+      {%- comment -%} BLOQUE CONTENIDO {%- endcomment -%}
+      <div class="custom-card-content">
+        <div class="custom-card-info-group">
+          <h3 class="custom-card-heading">
+            <a href="{{ card_product.url }}" class="full-unstyled-link">
+              {{ card_product.title | escape }}
+            </a>
+          </h3>
+
+          <div class="custom-card-meta">
+            {%- if show_vendor -%}
+              <div class="caption-with-letter-spacing light">{{ card_product.vendor }}</div>
+            {%- endif -%}
+
+            {%- if show_rating and card_product.metafields.reviews.rating.value != blank -%}
+              {% render 'rating', product: card_product %}
+            {%- endif -%}
+
+            {% render 'price', product: card_product, price_class: '', show_compare_at_price: true %}
+
+            {%- if card_product.quantity_price_breaks_configured? -%}
+              <div class="card__information-volume-pricing-note">
+                <span class="caption">{{ 'products.product.volume_pricing.note' | t }}</span>
+              </div>
+            {%- endif -%}
+          </div>
+        </div>
+
+        {%- comment -%} QUICK ADD / BULK LOGIC {%- endcomment -%}
+        <div class="custom-card-quick-add">
+          {% assign product_form_id = 'quick-add-' | append: section_id | append: card_product.id %}
+
+          {% if quick_add == 'standard' %}
+            <div class="quick-add no-js-hidden">
+              {%- if card_product.variants_count > 1 -%}
+                <modal-opener data-modal="#QuickAdd-{{ card_product.id }}">
+                  <button
+                    id="{{ product_form_id }}-submit"
+                    type="submit"
+                    class="button button--full-width custom-card-btn"
+                  >
+                    {{ 'products.product.choose_options' | t }}
+                  </button>
+                </modal-opener>
+                <quick-add-modal id="QuickAdd-{{ card_product.id }}" class="quick-add-modal">
+                  <div role="dialog" class="quick-add-modal__content global-settings-popup" tabindex="-1">
+                    <button id="ModalClose-{{ card_product.id }}" type="button" class="quick-add-modal__toggle">
+                      {% render 'icon-close' %}
+                    </button>
+                    <div id="QuickAddInfo-{{ card_product.id }}" class="quick-add-modal__content-info"></div>
+                  </div>
+                </quick-add-modal>
+              {%- else -%}
+                <product-form data-section-id="{{ section.id }}">
+                  {%- form 'product',
+                    card_product,
+                    id: product_form_id,
+                    class: 'form',
+                    data-type: 'add-to-cart-form'
+                  -%}
+                    <input type="hidden" name="id" value="{{ card_product.selected_or_first_available_variant.id }}">
+                    <button
+                      id="{{ product_form_id }}-submit"
+                      type="submit"
+                      class="button button--full-width custom-card-btn"
+                    >
+                      <span>{{ 'products.product.add_to_cart' | t }}</span>
+                      {%- render 'loading-spinner' -%}
+                    </button>
+                  {%- endform -%}
+                </product-form>
+              {%- endif -%}
+            </div>
+          {% elsif quick_add == 'bulk' %}
+            {%- comment -%} Se mantiene tu lógica de Bulk intacta aquí {%- endcomment -%}
+            {% if card_product.variants_count == 1 %}
+              {% render 'quantity-input', variant: card_product.selected_or_first_available_variant, min: 0 %}
+            {% else %}
+              <modal-opener data-modal="#QuickAddBulk-{{ card_product.id }}-{{ section_id }}">
+                <button class="button button--full-width button--secondary">Choose options</button>
+              </modal-opener>
+            {% endif %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+{%- endif -%}
