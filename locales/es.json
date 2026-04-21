@@ -117,6 +117,21 @@
   "products": {
     "product": {
       "add_to_cart": "Agregar al carrito",
+      "compare": {
+        "add": "Comparar",
+        "added": "En comparación",
+        "max_reached": "Puedes comparar hasta {{ count }} productos",
+        "open_drawer": "Abrir panel de comparación",
+        "drawer_title": "Comparar",
+        "clear": "Vaciar",
+        "go": "Ver comparación",
+        "row_product": "Producto",
+        "row_price": "Precio",
+        "row_vendor": "Marca",
+        "row_availability": "Disponibilidad",
+        "row_actions": "Acciones"
+      },
+      "in_stock": "En stock",
       "description": "Descripción",
       "on_sale": "Oferta",
       "quantity": {

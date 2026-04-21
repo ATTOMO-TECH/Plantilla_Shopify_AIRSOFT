@@ -1,0 +1,80 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "padding_top": 28,
+        "padding_bottom": 28
+      }
+    },
+    "compare_table": {
+      "type": "compare-table",
+      "blocks": {
+        "row_fps": {
+          "type": "spec_row",
+          "settings": {
+            "label": "FPS",
+            "metafield_namespace": "custom",
+            "metafield_key": "fps",
+            "unit": "fps"
+          }
+        },
+        "row_calibre": {
+          "type": "spec_row",
+          "settings": {
+            "label": "Calibre",
+            "metafield_namespace": "custom",
+            "metafield_key": "calibre",
+            "unit": "mm"
+          }
+        },
+        "row_peso": {
+          "type": "spec_row",
+          "settings": {
+            "label": "Peso",
+            "metafield_namespace": "custom",
+            "metafield_key": "peso",
+            "unit": "g"
+          }
+        },
+        "row_sistema": {
+          "type": "spec_row",
+          "settings": {
+            "label": "Sistema",
+            "metafield_namespace": "custom",
+            "metafield_key": "sistema"
+          }
+        },
+        "row_material": {
+          "type": "spec_row",
+          "settings": {
+            "label": "Material",
+            "metafield_namespace": "custom",
+            "metafield_key": "material"
+          }
+        }
+      },
+      "block_order": [
+        "row_fps",
+        "row_calibre",
+        "row_peso",
+        "row_sistema",
+        "row_material"
+      ],
+      "settings": {
+        "color_scheme": "background-1",
+        "heading": "Comparador de réplicas",
+        "max_products": 4,
+        "show_price": true,
+        "show_vendor": true,
+        "show_availability": true,
+        "show_add_to_cart": true,
+        "empty_heading": "No hay réplicas seleccionadas",
+        "empty_text": "Añade productos desde el catálogo usando el icono de comparar.",
+        "empty_cta": "Ver catálogo"
+      }
+    }
+  },
+  "order": ["main", "compare_table"]
+}

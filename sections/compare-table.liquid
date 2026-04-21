@@ -1,0 +1,249 @@
+{{ 'component-compare.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'product-compare.js' | asset_url }}" defer="defer"></script>
+
+<div class="compare-section color-{{ section.settings.color_scheme }} gradient isolate">
+  <div class="page-width">
+    <header class="compare-section__heading">
+      <h1 class="h1">{{ section.settings.heading | default: 'Compare products' }}</h1>
+      {%- if section.settings.subheading != blank -%}
+        <div class="rte">{{ section.settings.subheading }}</div>
+      {%- endif -%}
+    </header>
+
+    <compare-table data-max="{{ section.settings.max_products }}">
+      <div data-compare-empty class="compare-empty">
+        <svg
+          class="compare-empty__icon"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M3 6h13l-3-3"></path>
+          <path d="M21 18H8l3 3"></path>
+        </svg>
+        <h2>{{ section.settings.empty_heading | default: 'No products selected' }}</h2>
+        <p>{{ section.settings.empty_text | default: 'Add products from the catalog using the compare icon.' }}</p>
+        <a href="{{ routes.collections_url }}" class="button button--primary">
+          {{- section.settings.empty_cta | default: 'Browse catalog' -}}
+        </a>
+      </div>
+
+      <div class="compare-table-wrapper" data-compare-table hidden>
+        <table class="compare-table">
+          <tbody>
+            <tr data-spec-row data-is-products-row>
+              <th scope="row" class="compare-table__row-label">
+                {{ 'products.product.compare.row_product' | t }}
+              </th>
+            </tr>
+            {%- if section.settings.show_price -%}
+              <tr data-spec-row data-metafield-namespace="__builtin" data-metafield-key="price">
+                <th scope="row" class="compare-table__row-label">
+                  {{ 'products.product.compare.row_price' | t }}
+                </th>
+              </tr>
+            {%- endif -%}
+            {%- if section.settings.show_vendor -%}
+              <tr data-spec-row data-metafield-namespace="__builtin" data-metafield-key="vendor">
+                <th scope="row" class="compare-table__row-label">
+                  {{ 'products.product.compare.row_vendor' | t }}
+                </th>
+              </tr>
+            {%- endif -%}
+            {%- if section.settings.show_availability -%}
+              <tr
+                data-spec-row
+                data-metafield-namespace="__builtin"
+                data-metafield-key="availability"
+                data-label-available="{{ 'products.product.in_stock' | t | default: 'In stock' }}"
+                data-label-sold-out="{{ 'products.product.sold_out' | t }}"
+              >
+                <th scope="row" class="compare-table__row-label">
+                  {{ 'products.product.compare.row_availability' | t }}
+                </th>
+              </tr>
+            {%- endif -%}
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'spec_row' -%}
+                <tr
+                  data-spec-row
+                  data-metafield-namespace="{{ block.settings.metafield_namespace }}"
+                  data-metafield-key="{{ block.settings.metafield_key }}"
+                  data-unit="{{ block.settings.unit }}"
+                  {{ block.shopify_attributes }}
+                >
+                  <th scope="row" class="compare-table__row-label">
+                    {{ block.settings.label | default: block.settings.metafield_key }}
+                  </th>
+                </tr>
+              {%- endif -%}
+            {%- endfor -%}
+            {%- if section.settings.show_add_to_cart -%}
+              <tr
+                data-spec-row
+                data-metafield-namespace="__builtin"
+                data-metafield-key="add_to_cart"
+                data-label-add="{{ 'products.product.add_to_cart' | t }}"
+                data-label-sold-out="{{ 'products.product.sold_out' | t }}"
+              >
+                <th scope="row" class="compare-table__row-label">
+                  {{ 'products.product.compare.row_actions' | t }}
+                </th>
+              </tr>
+            {%- endif -%}
+          </tbody>
+        </table>
+
+        <template data-compare-column-template>
+          <td class="compare-table__cell compare-column" data-compare-column data-spec-cell>
+            <button type="button" class="compare-column__remove" data-col-remove="" aria-label="Remove">&times;</button>
+            <a href="#" class="compare-column__media" data-col-link>
+              <img data-col-image src="" alt="" loading="lazy">
+            </a>
+            <a href="#" class="compare-column__title" data-col-link>
+              <span data-col-title></span>
+            </a>
+          </td>
+        </template>
+      </div>
+    </compare-table>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Compare table",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "background-1"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Compare replicas"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Subheading"
+    },
+    {
+      "type": "range",
+      "id": "max_products",
+      "label": "Max products",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "header",
+      "content": "Built-in rows"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_price",
+      "label": "Show price row",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "label": "Show vendor row",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_availability",
+      "label": "Show availability row",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_add_to_cart",
+      "label": "Show add-to-cart row",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Empty state"
+    },
+    {
+      "type": "text",
+      "id": "empty_heading",
+      "label": "Empty heading",
+      "default": "No products selected"
+    },
+    {
+      "type": "text",
+      "id": "empty_text",
+      "label": "Empty text",
+      "default": "Add products from the catalog using the compare icon."
+    },
+    {
+      "type": "text",
+      "id": "empty_cta",
+      "label": "Empty CTA label",
+      "default": "Browse catalog"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "spec_row",
+      "name": "Spec row",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Row label",
+          "info": "Example: FPS, Caliber, Weight"
+        },
+        {
+          "type": "text",
+          "id": "metafield_namespace",
+          "label": "Metafield namespace",
+          "default": "custom",
+          "info": "Example: custom"
+        },
+        {
+          "type": "text",
+          "id": "metafield_key",
+          "label": "Metafield key",
+          "info": "Example: fps, calibre, peso"
+        },
+        {
+          "type": "text",
+          "id": "unit",
+          "label": "Unit (optional)",
+          "info": "Example: fps, mm, g"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Compare table",
+      "blocks": [
+        { "type": "spec_row", "settings": { "label": "FPS", "metafield_namespace": "custom", "metafield_key": "fps", "unit": "fps" } },
+        { "type": "spec_row", "settings": { "label": "Calibre", "metafield_namespace": "custom", "metafield_key": "calibre", "unit": "mm" } },
+        { "type": "spec_row", "settings": { "label": "Peso", "metafield_namespace": "custom", "metafield_key": "peso", "unit": "g" } },
+        { "type": "spec_row", "settings": { "label": "Sistema", "metafield_namespace": "custom", "metafield_key": "sistema" } },
+        { "type": "spec_row", "settings": { "label": "Material", "metafield_namespace": "custom", "metafield_key": "material" } }
+      ]
+    }
+  ],
+  "enabled_on": {
+    "templates": ["page", "index"]
+  }
+}
+{% endschema %}

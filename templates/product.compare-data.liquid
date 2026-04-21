@@ -1,0 +1,34 @@
+{% layout none -%}
+{%- capture metafields_json -%}
+  {
+    {%- assign ns_list = 'custom,specs,especificaciones,airsoft' | split: ',' -%}
+    {%- assign rendered = '' -%}
+    {%- for ns in ns_list -%}
+      {%- for kv in product.metafields[ns] -%}
+        {%- assign key = kv[0] -%}
+        {%- assign mf = kv[1] -%}
+        {%- capture entry -%}"{{ ns }}.{{ key }}": {{ mf.value | json }}{%- endcapture -%}
+        {%- if rendered == '' -%}
+          {%- assign rendered = entry -%}
+        {%- else -%}
+          {%- assign rendered = rendered | append: ',' | append: entry -%}
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endfor -%}
+    {{ rendered }}
+  }
+{%- endcapture -%}
+{
+  "handle": {{ product.handle | json }},
+  "title": {{ product.title | json }},
+  "vendor": {{ product.vendor | json }},
+  "url": {{ product.url | json }},
+  "available": {{ product.available | json }},
+  "price": {{ product.price | json }},
+  "price_formatted": {{ product.price | money | json }},
+  "compare_at_price": {{ product.compare_at_price | json }},
+  "featured_image": {%- if product.featured_image -%}{{ product.featured_image | image_url: width: 600 | json }}{%- else -%}null{%- endif -%},
+  "variant_id": {{ product.selected_or_first_available_variant.id | json }},
+  "variant_available": {{ product.selected_or_first_available_variant.available | json }},
+  "metafields": {{ metafields_json | strip_newlines }}
+}

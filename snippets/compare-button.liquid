@@ -1,0 +1,48 @@
+{% comment %}
+  Renders a compare toggle button for a product.
+
+  Accepts:
+  - product: {Object} Product Liquid object (required)
+  - style: {String} 'card' (icon-only, overlay) or 'full' (icon + label). Default: 'full'
+  - max: {Number} Max products allowed in comparison. Default: 4
+
+  Usage:
+  {% render 'compare-button', product: card_product, style: 'card' %}
+{% endcomment %}
+{%- liquid
+  assign btn_style = style | default: 'full'
+  assign btn_max = max | default: 4
+-%}
+{%- if product and product != empty -%}
+  <compare-button
+    class="compare-button-wrapper compare-button-wrapper--{{ btn_style }}"
+    data-product-handle="{{ product.handle }}"
+    data-max="{{ btn_max }}"
+    data-label-idle="{{ 'products.product.compare.add' | t }}"
+    data-label-active="{{ 'products.product.compare.added' | t }}"
+    data-max-message="{{ 'products.product.compare.max_reached' | t: count: btn_max }}"
+  >
+    <button
+      type="button"
+      class="compare-button compare-button--{{ btn_style }}"
+      aria-pressed="false"
+      aria-label="{{ 'products.product.compare.add' | t }}"
+    >
+      <svg
+        class="compare-button__icon"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+        focusable="false"
+      >
+        <path d="M3 6h13l-3-3"></path>
+        <path d="M21 18H8l3 3"></path>
+      </svg>
+      <span class="compare-button__label">{{ 'products.product.compare.add' | t }}</span>
+    </button>
+  </compare-button>
+{%- endif -%}

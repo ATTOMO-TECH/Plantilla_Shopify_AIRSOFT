@@ -1,0 +1,65 @@
+{% comment %}
+  Floating comparison drawer — renders globally from theme.liquid.
+{% endcomment %}
+{{ 'component-compare.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'product-compare.js' | asset_url }}" defer="defer"></script>
+
+<compare-drawer data-compare-url="{{ routes.root_url }}pages/comparar">
+  <button
+    type="button"
+    class="compare-drawer__toggle"
+    data-compare-drawer-toggle
+    aria-label="{{ 'products.product.compare.open_drawer' | t }}"
+  >
+    <svg
+      viewBox="0 0 24 24"
+      width="18"
+      height="18"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M3 6h13l-3-3"></path>
+      <path d="M21 18H8l3 3"></path>
+    </svg>
+    <span>{{ 'products.product.compare.drawer_title' | t }}</span>
+    <span data-compare-drawer-count aria-hidden="true">0</span>
+  </button>
+
+  <div data-compare-drawer-backdrop></div>
+
+  <aside
+    class="compare-drawer__panel"
+    data-compare-drawer-panel
+    role="dialog"
+    aria-modal="true"
+    aria-label="{{ 'products.product.compare.drawer_title' | t }}"
+  >
+    <header class="compare-drawer__header">
+      <h2 class="compare-drawer__title">{{ 'products.product.compare.drawer_title' | t }}</h2>
+      <button
+        type="button"
+        class="compare-drawer__close"
+        data-compare-drawer-close
+        aria-label="{{ 'accessibility.close' | t }}"
+      >&times;</button>
+    </header>
+    <div class="compare-drawer__body">
+      <ul class="compare-drawer__list" data-compare-drawer-list></ul>
+    </div>
+    <footer class="compare-drawer__footer">
+      <button
+        type="button"
+        class="button button--secondary"
+        data-compare-drawer-clear
+      >{{ 'products.product.compare.clear' | t }}</button>
+      <a
+        href="{{ routes.root_url }}pages/comparar"
+        class="button button--primary"
+      >{{ 'products.product.compare.go' | t }}</a>
+    </footer>
+  </aside>
+</compare-drawer>
